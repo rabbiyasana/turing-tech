@@ -3,14 +3,14 @@ import Button from "../Button/button";
 function Navbar() {
   return (
     <>
-      <div className="container" style={{ height: "80px" }}>
-        <div className="row">
-          <div className="col-sm-6">
-            <img src={ttLogo} alt="turing-logo" style={{ width: "313px" }} />
-          </div>
-          <div className="col-sm-6">
-            <Button text="Logout" />
-          </div>
+      <div
+        className="container"
+        style={{ height: "80px", border: "1px", borderColor: "#D3D5D8" }}
+      >
+        <div className="row d-flex justify-content-between">
+          <img src={ttLogo} alt="turing-logo" style={{ width: "313px" }} />
+
+          <Button text="Logout" />
         </div>
       </div>
     </>

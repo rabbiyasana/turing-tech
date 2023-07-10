@@ -1,7 +1,12 @@
 function Button(props) {
   return (
     <>
-      <button style={{ backgroundColor: "#4F46F8" }}>{props.text}</button>
+      <button
+        className="border-white text-white"
+        style={{ backgroundColor: "#4F46F8", width: "115px", height: "40px" }}
+      >
+        {props.text}
+      </button>
     </>
   );
 }
