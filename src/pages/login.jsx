@@ -18,7 +18,7 @@ export default function Login() {
   const { loggedIn, setLoggedIn } = useAuth();
   const navigate = useNavigate();
 
-  const formik = useFormik({
+  const { errors, handleChange, handleSubmit, touched, values } = useFormik({
     initialValues: {
       email: "",
       password: "",
@@ -27,13 +27,17 @@ export default function Login() {
     onSubmit: (values, { resetForm }) => {
       localStorage.setItem("email", values.email);
       localStorage.setItem("password", values.password);
+      setLoggedIn(true);
 
       localStorage.setItem("loggedIn", JSON.stringify(true));
 
-      setLoggedIn(true);
-      navigate("/home");
+      // navigate("/home");
     },
   });
+  if (loggedIn === true) {
+    // successNotify();
+    return <Navigate to="/home" replace={true}></Navigate>;
+  }
 
   return (
     <>
@@ -43,7 +47,7 @@ export default function Login() {
           <div className="col-sm-6">
             <div className="card text-start">
               <div className="card-body">
-                <form onSubmit={formik.handleSubmit}>
+                <form onSubmit={handleSubmit}>
                   <div className="mb-3 mt-4">
                     <label htmlFor="email">Email</label>
                     <input
@@ -51,15 +55,13 @@ export default function Login() {
                       name="email"
                       type="text"
                       placeholder="Enter your email"
-                      value={formik.values.email}
-                      onChange={formik.handleChange}
+                      value={values.email}
+                      onChange={handleChange}
                       style={{ width: "100%" }}
                       className="mt-3"
                     />
                     <p className="error">
-                      {formik.errors.email &&
-                        formik.touched.email &&
-                        formik.errors.email}
+                      {errors.email && touched.email && errors.email}
                     </p>
                   </div>
 
@@ -71,14 +73,12 @@ export default function Login() {
                       name="password"
                       type="password"
                       placeholder="Enter your password"
-                      value={formik.values.password}
-                      onChange={formik.handleChange}
+                      value={values.password}
+                      onChange={handleChange}
                       style={{ width: "100%" }}
                     />
                     <p className="error">
-                      {formik.errors.password &&
-                        formik.touched.password &&
-                        formik.errors.password}
+                      {errors.password && touched.password && errors.password}
                     </p>
                   </div>
 
