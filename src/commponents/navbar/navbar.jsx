@@ -1,6 +1,11 @@
 import ttLogo from "../../assets/images/tt-logo.png";
-import Button from "../Button/button";
+import { useAuth } from "../../context/AuthContext";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 function Navbar() {
+  const { loggedIn, setLoggedIn } = useAuth();
+  // const { isLogout, setisLogout } = useState();
+  let navigate = useNavigate();
   return (
     <>
       <div
@@ -10,7 +15,22 @@ function Navbar() {
         <div className="row d-flex justify-content-between">
           <img src={ttLogo} alt="turing-logo" style={{ width: "313px" }} />
 
-          <Button text="Logout" />
+          <button
+            onClick={() => {
+              localStorage.removeItem("loggedIn");
+              setLoggedIn(false);
+              // setislogout(false);
+              navigate("/");
+            }}
+            className="border-white text-white"
+            style={{
+              backgroundColor: "#4F46F8",
+              width: "115px",
+              height: "40px",
+            }}
+          >
+            Logout
+          </button>
         </div>
       </div>
     </>
