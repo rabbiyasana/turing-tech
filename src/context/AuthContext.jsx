@@ -34,10 +34,11 @@ export function AuthProvider(props) {
     setUser("");
     localStorage.removeItem("access_token");
     localStorage.removeItem("refresh_token");
+    localStorage.removeItem("user");
   };
   return (
     <>
-      <AuthContext.Provider value={{ setLoggedIn, Login }}>
+      <AuthContext.Provider value={{ Login, Logout, user }}>
         {props.children}
       </AuthContext.Provider>
     </>

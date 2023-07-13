@@ -3,8 +3,10 @@ import { useAuth } from "../../context/AuthContext";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 function Navbar() {
-  const { loggedIn, setLoggedIn } = useAuth();
-  // const { isLogout, setisLogout } = useState();
+  const { Logout } = useAuth();
+  const HandleLogout = () => {
+    Logout();
+  };
   let navigate = useNavigate();
   return (
     <>
@@ -16,12 +18,7 @@ function Navbar() {
           <img src={ttLogo} alt="turing-logo" style={{ width: "313px" }} />
 
           <button
-            onClick={() => {
-              localStorage.removeItem("loggedIn");
-              setLoggedIn(false);
-              // setislogout(false);
-              navigate("/");
-            }}
+            onClick={HandleLogout}
             className="border-white text-white"
             style={{
               backgroundColor: "#4F46F8",
