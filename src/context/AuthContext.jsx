@@ -1,12 +1,12 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { baseUrl } from "../utilities/api";
 import { AuthHeader } from "../utilities/header";
+import { useNavigate } from "react-router-dom";
 const AuthContext = createContext();
 
 export function AuthProvider(props) {
-  // const [loggedIn, setLoggedIn] = useState(!!props.logged);
-  // console.log(props.logged);
+  const navigate = useNavigate();
   const [user, setUser] = useState("");
   // login function
   const Login = async (username, password) => {
@@ -26,6 +26,7 @@ export function AuthProvider(props) {
     localStorage.setItem("access_token", access_token);
     localStorage.setItem("refresh_token", refresh_token);
     localStorage.setItem("user", user.id);
+    navigate("/home ");
   };
 
   // logout function
@@ -35,7 +36,17 @@ export function AuthProvider(props) {
     localStorage.removeItem("access_token");
     localStorage.removeItem("refresh_token");
     localStorage.removeItem("user");
+    navigate("/");
   };
+  useEffect(() => {
+    if (user == "") {
+      navigate("/");
+    }
+    if (user != "") {
+      navigate("/home");
+    }
+  }, [user]);
+
   return (
     <>
       <AuthContext.Provider value={{ Login, Logout, user }}>
