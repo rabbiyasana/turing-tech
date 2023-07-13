@@ -100,14 +100,24 @@
 //   );
 // }
 
-import React from "react";
+import React, { useState, useCallback } from "react";
 import Navbar from "../commponents/navbar/navbar";
-
+import axios from "axios";
 import { useAuth } from "../context/AuthContext";
 
 export default function Login() {
   const { Login } = useAuth();
-
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const handleSubmit = useCallback(
+    async (e) => {
+      e.preventDefault();
+      await Login(username, password);
+      setUsername("");
+      setPassword("");
+    },
+    [Login, username, password]
+  );
   return (
     <>
       <Navbar />
@@ -116,7 +126,7 @@ export default function Login() {
           <div className="col-sm-6">
             <div className="card text-start">
               <div className="card-body">
-                <form>
+                <form onSubmit={handleSubmit}>
                   <div className="form-group mt-3">
                     <label htmlFor="email">Email</label>
                     <input
@@ -124,8 +134,11 @@ export default function Login() {
                       className="form-control mt-3"
                       id="email"
                       required
-                      // value={email}
+                      value={username}
                       placeholder="email"
+                      onChange={(e) => {
+                        setUsername(e.target.value);
+                      }}
                     />
                   </div>
                   <div class="form-group mt-3">
@@ -135,7 +148,11 @@ export default function Login() {
                       type="password"
                       className="form-control mt-3"
                       id="password"
+                      value={password}
                       placeholder="password"
+                      onChange={(e) => {
+                        setPassword(e.target.value);
+                      }}
                     />
                   </div>
                   <button type="submit" className="btn btn-primary mt-3">
