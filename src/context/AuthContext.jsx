@@ -1,5 +1,12 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import axios from "axios";
+import { isAxiosError } from "axios";
 import { baseUrl } from "../utilities/api";
 import { AuthHeader } from "../utilities/header";
 import { useNavigate } from "react-router-dom";
@@ -18,7 +25,7 @@ export function AuthProvider(props) {
         password,
       },
     });
-    console.log(res.data);
+    // console.log(res.data);
     const { user, access_token, refresh_token } = res.data;
 
     // the user from res use it to manag the state
@@ -38,11 +45,31 @@ export function AuthProvider(props) {
     localStorage.removeItem("user");
     navigate("/");
   };
-  useEffect(() => {
-    if (user == "") {
-      navigate("/");
+
+  const refreshToken = useCallback(async () => {
+    try {
+      const response = await axios({
+        method: "post",
+        url: `${baseUrl}/auth/refresh-token`,
+        headers: AuthHeader(),
+      });
+      const { access_token, user } = response.data;
+      localStorage.setItem("access_token", access_token);
+      localStorage.setItem("user", user.id);
+      setUser(user);
+    } catch (error) {
+      if (error) {
+        Logout();
+      }
     }
-    if (user != "") {
+  });
+  useEffect(() => {
+    let accessToken = localStorage.getItem("access_token");
+    let refreshToken = localStorage.getItem("refresh_token");
+    if (accessToken && refreshToken && user !== "") {
+      headers: AuthHeader();
+      navigate("home");
+    } else {
       navigate("/home");
     }
   }, [user]);

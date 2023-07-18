@@ -1,22 +1,46 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import axios from "axios";
+import { baseUrl } from "../../utilities/api";
+import { useAuth } from "../../context/AuthContext";
+import { AuthHeader } from "../../utilities/header";
+import { number } from "yup";
 function Table() {
-  const url = "https://frontend-test-api.aircall.io";
-
+  const { user } = useAuth();
   const [data, setData] = useState(null);
 
+  let calls = {
+    nodes: [],
+    totalCount: number,
+    hasNextPage: Boolean,
+  };
+  const [AllCalls, setAllCalls] = useState(calls);
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const fetchAllCalls = useCallback(async () => {
+    const response = await axios({
+      method: "get",
+      url: `${baseUrl}/calls?offset=${(currentPage - 1) * 10}&limit=10`,
+      headers: AuthHeader(),
+    });
+    setAllCalls(response.data);
+    // console.log(response.data.nodes);
+    // response.data.nodes.map((c) => {
+    //   console.log(c.call_type);
+    // });
+  }, [currentPage]);
+
+  // const archiveCalls = useCallback(async (ID) => {
+  //   const rresponse = await axios({
+  //     method: "put",
+  //     url: `${baseUrl}/calls/${ID}/archive`,
+  //     headers: AuthHeader(),
+  //   });
+  // });
+
   useEffect(() => {
-    // Fetch data from API endpoint
-    axios
-      .get(url)
-      .then((response) => {
-        setData(response.data);
-        console.log(response.data);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  }, []);
+    fetchAllCalls();
+  }, [fetchAllCalls]);
+  const { nodes } = calls;
   return (
     <>
       <table className="table border rounded mt-2">
@@ -31,6 +55,22 @@ function Table() {
             <th scope="col">CREATED AT</th>
             <th scope="col">Status</th>
             <th scope="col">Action</th>
+          </tr>
+          <tr>
+            <td>
+              {useEffect(() => {
+                fetchAllCalls();
+                const { nodes } = fetchAllCalls();
+                nodes.map(
+                  (c) => {
+                    c.call_type;
+                    console.log(c.call_type);
+                  },
+                  [fetchAllCalls()]
+                );
+                console.log(calls.nodes);
+              })}
+            </td>
           </tr>
         </thead>
       </table>

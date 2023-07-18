@@ -143,7 +143,7 @@ export default function Login() {
                       }}
                     />
                   </div>
-                  <div class="form-group mt-3">
+                  <div className="form-group mt-3">
                     <label htmlFor="password">Password</label>
                     <input
                       required
