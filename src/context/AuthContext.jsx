@@ -63,14 +63,15 @@ export function AuthProvider(props) {
       }
     }
   });
+  // if access token and user is not available redirect to login
+
   useEffect(() => {
     let accessToken = localStorage.getItem("access_token");
-    let refreshToken = localStorage.getItem("refresh_token");
-    if (accessToken && refreshToken && user !== "") {
+    if (accessToken && user !== "") {
       headers: AuthHeader();
       navigate("home");
     } else {
-      navigate("/home");
+      navigate("/");
     }
   }, [user]);
 

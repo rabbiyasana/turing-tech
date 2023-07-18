@@ -29,14 +29,6 @@ function Table() {
     // });
   }, [currentPage]);
 
-  // const archiveCalls = useCallback(async (ID) => {
-  //   const rresponse = await axios({
-  //     method: "put",
-  //     url: `${baseUrl}/calls/${ID}/archive`,
-  //     headers: AuthHeader(),
-  //   });
-  // });
-
   useEffect(() => {
     fetchAllCalls();
   }, [fetchAllCalls]);
