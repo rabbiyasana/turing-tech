@@ -67,7 +67,7 @@ export function AuthProvider(props) {
 
   useEffect(() => {
     const logggedUser = localStorage.getItem("user");
-    if (logggedUser !== "") {
+    if (logggedUser) {
       headers: AuthHeader();
       navigate("/home");
     } else {
