@@ -23,16 +23,13 @@ function Table() {
       headers: AuthHeader(),
     });
     setAllCalls(response.data);
-    // console.log(response.data.nodes);
-    // response.data.nodes.map((c) => {
-    //   console.log(c.call_type);
-    // });
+    // console.log(response.data);
   }, [currentPage]);
 
   useEffect(() => {
     fetchAllCalls();
   }, [fetchAllCalls]);
-  const { nodes } = calls;
+
   return (
     <>
       <table className="table border rounded mt-2">
@@ -48,22 +45,62 @@ function Table() {
             <th scope="col">Status</th>
             <th scope="col">Action</th>
           </tr>
+          {AllCalls.nodes.map((e) => {
+            return (
+              <tr>
+                <td>{e.call_type}</td>
+                <td>{e.direction}</td>
+                <td>{e.duration}</td>
+                <td>{e.from}</td>
+                <td>{e.to}</td>
+                <td>{e.via}</td>
+              </tr>
+            );
+          })}
+          {/* <tr>
+            {AllCalls.nodes.map((c) => {
+              return <td> {c.direction}</td>;
+            })}
+          </tr>
           <tr>
-            <td>
-              {useEffect(() => {
-                fetchAllCalls();
-                const { nodes } = fetchAllCalls();
-                nodes.map(
-                  (c) => {
-                    c.call_type;
-                    console.log(c.call_type);
-                  },
-                  [fetchAllCalls()]
-                );
-                console.log(calls.nodes);
+            {AllCalls.nodes.map((c) => {
+              return <td> {c.duration}</td>;
+            })}
+          </tr>
+
+          <tr>
+            {AllCalls.nodes.map((c) => {
+              return <td> {c.from}</td>;
+            })}
+          </tr>
+          <tr>
+            {AllCalls.nodes.map((c) => {
+              return <td> {c.to}</td>;
+            })}
+          </tr>
+          <tr>
+            {AllCalls.nodes.map((c) => {
+              return <td> {c.via}</td>;
+            })}
+          </tr>
+          <tr>
+            {AllCalls.nodes.map((c) => {
+              return <td> {c.created}</td>;
+            })}
+          </tr>
+          <tr>
+            {AllCalls.nodes.map((c) => {
+              console.log(c);
+            })}
+          </tr> */}
+
+          {/* <td>
+              {AllCalls.nodes.map((c) => {
+                c.duration;
               })}
             </td>
-          </tr>
+          </tr> */}
+          <tr></tr>
         </thead>
       </table>
     </>

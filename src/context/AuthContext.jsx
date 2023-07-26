@@ -66,10 +66,10 @@ export function AuthProvider(props) {
   // if access token and user is not available redirect to login
 
   useEffect(() => {
-    let accessToken = localStorage.getItem("access_token");
-    if (accessToken && user !== "") {
+    const logggedUser = localStorage.getItem("user");
+    if (logggedUser !== "") {
       headers: AuthHeader();
-      navigate("home");
+      navigate("/home");
     } else {
       navigate("/");
     }
