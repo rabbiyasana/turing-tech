@@ -8,6 +8,7 @@ function Navbar() {
     Logout();
   };
   let navigate = useNavigate();
+  const loggedIn = localStorage.getItem("user");
   return (
     <>
       <div
@@ -16,18 +17,19 @@ function Navbar() {
       >
         <div className="row d-flex justify-content-between">
           <img src={ttLogo} alt="turing-logo" style={{ width: "313px" }} />
-
-          <button
-            onClick={HandleLogout}
-            className="border-white text-white"
-            style={{
-              backgroundColor: "#4F46F8",
-              width: "115px",
-              height: "40px",
-            }}
-          >
-            Logout
-          </button>
+          {loggedIn && (
+            <button
+              onClick={HandleLogout}
+              className="border-white text-white"
+              style={{
+                backgroundColor: "#4F46F8",
+                width: "115px",
+                height: "40px",
+              }}
+            >
+              Logout
+            </button>
+          )}
         </div>
       </div>
     </>
