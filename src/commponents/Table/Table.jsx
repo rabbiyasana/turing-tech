@@ -57,49 +57,7 @@ function Table() {
               </tr>
             );
           })}
-          {/* <tr>
-            {AllCalls.nodes.map((c) => {
-              return <td> {c.direction}</td>;
-            })}
-          </tr>
-          <tr>
-            {AllCalls.nodes.map((c) => {
-              return <td> {c.duration}</td>;
-            })}
-          </tr>
 
-          <tr>
-            {AllCalls.nodes.map((c) => {
-              return <td> {c.from}</td>;
-            })}
-          </tr>
-          <tr>
-            {AllCalls.nodes.map((c) => {
-              return <td> {c.to}</td>;
-            })}
-          </tr>
-          <tr>
-            {AllCalls.nodes.map((c) => {
-              return <td> {c.via}</td>;
-            })}
-          </tr>
-          <tr>
-            {AllCalls.nodes.map((c) => {
-              return <td> {c.created}</td>;
-            })}
-          </tr>
-          <tr>
-            {AllCalls.nodes.map((c) => {
-              console.log(c);
-            })}
-          </tr> */}
-
-          {/* <td>
-              {AllCalls.nodes.map((c) => {
-                c.duration;
-              })}
-            </td>
-          </tr> */}
           <tr></tr>
         </thead>
       </table>
