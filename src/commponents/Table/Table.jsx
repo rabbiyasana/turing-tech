@@ -23,7 +23,7 @@ function Table() {
       headers: AuthHeader(),
     });
     setAllCalls(response.data);
-    // console.log(response.data);
+    console.log(response.data);
   }, [currentPage]);
 
   useEffect(() => {
@@ -54,6 +54,8 @@ function Table() {
                 <td>{e.from}</td>
                 <td>{e.to}</td>
                 <td>{e.via}</td>
+                {/* <td>{e.created_at.getTime()}</td>
+                <td>{e.is_archived}</td> */}
               </tr>
             );
           })}

@@ -6,7 +6,6 @@ import {
   useState,
 } from "react";
 import axios from "axios";
-import { isAxiosError } from "axios";
 import { baseUrl } from "../utilities/api";
 import { AuthHeader } from "../utilities/header";
 import { useNavigate } from "react-router-dom";
@@ -17,7 +16,7 @@ export function AuthProvider(props) {
   const [user, setUser] = useState("");
   // login function
   const Login = async (username, password) => {
-    const res = await axios({
+    const response = await axios({
       method: "post",
       url: `${baseUrl}/auth/login`,
       data: {
@@ -25,8 +24,8 @@ export function AuthProvider(props) {
         password,
       },
     });
-    // console.log(res.data);
-    const { user, access_token, refresh_token } = res.data;
+    console.log(response.data);
+    const { user, access_token, refresh_token } = response.data;
 
     // the user from res use it to manag the state
     setUser(user);
@@ -34,7 +33,7 @@ export function AuthProvider(props) {
     localStorage.setItem("refresh_token", refresh_token);
     localStorage.setItem("user", user.id);
     localStorage.setItem("startTime", new Date().toLocaleString());
-    navigate("/home ");
+    // navigate("/home ");
   };
 
   // logout function
@@ -64,8 +63,24 @@ export function AuthProvider(props) {
         Logout();
       }
     }
-  });
-  // if access token and user is not available redirect to login
+  }, []);
+
+  useEffect(() => {
+    const startTime = localStorage.getItem("startTime");
+    const timeFrom_token = new Date(startTime);
+    const refreshTime = new Date();
+    const time_less_thn_ten = 9 * 60 * 1000;
+    if (refreshTime.getTime() - timeFrom_token.getTime() > 9 * 60 * 1000) {
+      refreshToken();
+    }
+
+    const interval = setInterval(() => {
+      refreshToken();
+    }, 9 * 60 * 1000);
+
+    return () => clearInterval(interval);
+  }, [refreshToken]);
+  // // if access token and user is not available redirect to login
 
   useEffect(() => {
     const logggedUser = localStorage.getItem("user");
