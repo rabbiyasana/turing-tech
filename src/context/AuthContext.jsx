@@ -33,6 +33,7 @@ export function AuthProvider(props) {
     localStorage.setItem("access_token", access_token);
     localStorage.setItem("refresh_token", refresh_token);
     localStorage.setItem("user", user.id);
+    localStorage.setItem("startTime", new Date().toLocaleString());
     navigate("/home ");
   };
 
