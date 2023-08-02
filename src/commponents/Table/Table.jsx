@@ -67,7 +67,10 @@ function Table(props) {
                 <td>{e.via}</td>
                 <td>{getDateFormat(new Date(e.created_at))}</td>
                 <td>
-                  <ArchivePill status={e.is_archived} />
+                  <ArchivePill
+                    archived={e.is_archived}
+                    className="cursor-pointer"
+                  />
                 </td>
                 <td>
                   <Button text="Add Note"></Button>

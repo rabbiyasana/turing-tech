@@ -1,8 +1,9 @@
-function ArchivePill(props) {
+function ArchivePill(archived, ...props) {
   return (
-    <div class="nav nav-pills">
-      <li class="active">
-        <a href="#">{props.status}</a>
+    <div className="nav nav-pills">
+      <li className="active">
+        <a>{props.status}</a>
+        {archived ? "Archived" : "Unarchive"}
       </li>
     </div>
   );
