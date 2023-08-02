@@ -3,8 +3,10 @@ import axios from "axios";
 import { baseUrl } from "../../utilities/api";
 import { useAuth } from "../../context/AuthContext";
 import { AuthHeader } from "../../utilities/header";
-import { number } from "yup";
-function Table() {
+import ArchivePill from "../ArchivedPill/ArchivePill";
+import Button from "../Button/Button";
+// import {number} from yup
+function Table(props) {
   // fuction to format the created date
 
   function getDateFormat(date) {
@@ -19,7 +21,7 @@ function Table() {
 
   let calls = {
     nodes: [],
-    totalCount: number,
+    // totalCount: number,
     hasNextPage: Boolean,
   };
   const [AllCalls, setAllCalls] = useState(calls);
@@ -38,15 +40,7 @@ function Table() {
   useEffect(() => {
     fetchAllCalls();
   }, [fetchAllCalls]);
-  const handleArchive = () => {
-    AllCalls.nodes.map((e) => {
-      if (!e.is_archived) {
-        return "UnArchive";
-      } else {
-        return "Archive";
-      }
-    });
-  };
+
   return (
     <>
       <table className="table border rounded mt-2">
@@ -72,7 +66,12 @@ function Table() {
                 <td>{e.to}</td>
                 <td>{e.via}</td>
                 <td>{getDateFormat(new Date(e.created_at))}</td>
-                <td>{handleArchive}</td>
+                <td>
+                  <ArchivePill status={e.is_archived} />
+                </td>
+                <td>
+                  <Button text="Add Note"></Button>
+                </td>
               </tr>
             );
           })}
