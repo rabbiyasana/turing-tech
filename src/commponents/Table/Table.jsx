@@ -3,7 +3,7 @@ import axios from "axios";
 import { baseUrl } from "../../utilities/api";
 import { useAuth } from "../../context/AuthContext";
 import { AuthHeader } from "../../utilities/header";
-import ArchivePill from "../ArchivedPill/ArchivePill";
+import ArchiveTab from "../ArchivedPill/ArchivePill";
 import Button from "../Button/Button";
 // import {number} from yup
 function Table(props) {
@@ -67,7 +67,7 @@ function Table(props) {
                 <td>{e.via}</td>
                 <td>{getDateFormat(new Date(e.created_at))}</td>
                 <td>
-                  <ArchivePill
+                  <ArchiveTab
                     archived={e.is_archived}
                     className="cursor-pointer"
                   />

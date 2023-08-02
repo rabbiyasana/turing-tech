@@ -1,4 +1,4 @@
-function ArchivePill(archived, ...props) {
+function ArchiveTab(archived, ...props) {
   return (
     <div className="nav nav-pills">
       <li className="active">
@@ -8,4 +8,4 @@ function ArchivePill(archived, ...props) {
     </div>
   );
 }
-export default ArchivePill;
+export default ArchiveTab;
