@@ -5,6 +5,15 @@ import { useAuth } from "../../context/AuthContext";
 import { AuthHeader } from "../../utilities/header";
 import { number } from "yup";
 function Table() {
+  // fuction to format the created date
+
+  function getDateFormat(date) {
+    const day = String(date.getDate()).padStart(2, "0");
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const year = String(date.getFullYear());
+    return `${day}-${month}-${year}`;
+  }
+
   const { user } = useAuth();
   const [data, setData] = useState(null);
 
@@ -23,13 +32,21 @@ function Table() {
       headers: AuthHeader(),
     });
     setAllCalls(response.data);
-    console.log(response.data);
+    // console.log(response.data);
   }, [currentPage]);
 
   useEffect(() => {
     fetchAllCalls();
   }, [fetchAllCalls]);
-
+  const handleArchive = () => {
+    AllCalls.nodes.map((e) => {
+      if (!e.is_archived) {
+        return "UnArchive";
+      } else {
+        return "Archive";
+      }
+    });
+  };
   return (
     <>
       <table className="table border rounded mt-2">
@@ -47,15 +64,15 @@ function Table() {
           </tr>
           {AllCalls.nodes.map((e) => {
             return (
-              <tr>
+              <tr key={e.id}>
                 <td>{e.call_type}</td>
                 <td>{e.direction}</td>
                 <td>{e.duration}</td>
                 <td>{e.from}</td>
                 <td>{e.to}</td>
                 <td>{e.via}</td>
-                <td>{e.created_at}</td>
-                <td>{e.is_archived}</td>
+                <td>{getDateFormat(new Date(e.created_at))}</td>
+                <td>{handleArchive}</td>
               </tr>
             );
           })}
