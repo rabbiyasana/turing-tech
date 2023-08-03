@@ -3,8 +3,9 @@ import axios from "axios";
 import { baseUrl } from "../../utilities/api";
 import { useAuth } from "../../context/AuthContext";
 import { AuthHeader } from "../../utilities/header";
-import ArchiveTab from "../ArchivedPill/ArchivePill";
+import ArchiveTab from "../ArchivedTab/ArchiveTab";
 import Button from "../Button/Button";
+import NoteModal from "../NoteModal/NOteModal";
 // import {number} from yup
 function Table(props) {
   // fuction to format the created date
@@ -41,6 +42,14 @@ function Table(props) {
     fetchAllCalls();
   }, [fetchAllCalls]);
 
+  // note modal functions
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const handleOpenModal = () => {
+    setIsModalOpen(true);
+  };
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
   return (
     <>
       <table className="table border rounded mt-2">
@@ -73,7 +82,7 @@ function Table(props) {
                   />
                 </td>
                 <td>
-                  <Button text="Add Note"></Button>
+                  <Button text="Add Note" onClick={handleOpenModal}></Button>
                 </td>
               </tr>
             );
@@ -82,6 +91,10 @@ function Table(props) {
           <tr></tr>
         </thead>
       </table>
+      <NoteModal isOpen={isModalOpen} onClose={handleCloseModal}>
+        <h2>Modal Content</h2>
+        <p>This is the content of the modal.</p>
+      </NoteModal>
     </>
   );
 }
